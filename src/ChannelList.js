@@ -1,5 +1,6 @@
  // src/ChannelList.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';//importar el useNavigate
 
 const channels = [
   { id: 1, name: 'Netflix', description: 'Disfruta de una vasta biblioteca de series y películas con Netflix.', url: 'https://www.netflix.com' },
@@ -19,7 +20,7 @@ const channels = [
 
 const ChannelList = () => {
     const [search, setSearch] = useState('');
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // Usa useNavigate
   
     const filteredChannels = channels.filter(channel =>
       channel.name.toLowerCase().includes(search.toLowerCase())
@@ -49,6 +50,6 @@ const ChannelList = () => {
         </ul>
       </div>
     );
-  };
-  
-  export default ChannelList;
+};
+
+export default ChannelList;
