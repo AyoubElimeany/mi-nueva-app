@@ -17,33 +17,38 @@ const channels = [
   { id: 13, name: 'DreamWorks Pictures', description: 'Encuentra emocionantes películas y animaciones de DreamWorks Pictures.', url: 'https://www.dreamworks.com' }
 ];
 
-const ChannelList = ({ onChannelClick }) => {
-  const [search, setSearch] = useState('');
-  const filteredChanneles = channels.filter(channel =>
-    channel.name.toLowerCase().includes(search.toLowerCase())
-  );
+const ChannelList = () => {
+    const [search, setSearch] = useState('');
+    const navigate = useNavigate();
   
-
-  return (
-    <div>
-      <h2>Lista de Canales IPTV</h2>
-      <input
-        type="text"
-        placeholder="Buscar canal..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        style={{ marginBottom: '10px', padding: '5px', width: '100%' }}
-      />
-      <ul className="ChannelList" style={{ listStyleType: 'none', padding: 0 }}>
-        {filteredChanneles.map(channel => (
-          <li key={channel.id} onClick={() => onChannelClick(channel.url)} style={{ cursor: 'pointer', marginBottom: '10px' }}>
-            <h3>{channel.name}</h3>
-            <p>{channel.description}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default ChannelList;
+    const filteredChannels = channels.filter(channel =>
+      channel.name.toLowerCase().includes(search.toLowerCase())
+    );
+  
+    const handleChannelClick = (channelUrl) => {
+      navigate('/video', { state: { url: channelUrl } });
+    };
+  
+    return (
+      <div>
+        <h2>Lista de Canales IPTV</h2>
+        <input
+          type="text"
+          placeholder="Buscar canal..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          style={{ marginBottom: '10px', padding: '5px', width: '100%' }}
+        />
+        <ul className="ChannelList" style={{ listStyleType: 'none', padding: 0 }}>
+          {filteredChannels.map(channel => (
+            <li key={channel.id} onClick={() => handleChannelClick(channel.url)} style={{ cursor: 'pointer', marginBottom: '10px' }}>
+              <h3>{channel.name}</h3>
+              <p>{channel.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+  
+  export default ChannelList;
