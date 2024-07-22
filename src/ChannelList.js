@@ -35,7 +35,7 @@ const ChannelList = ({ onChannelClick }) => {
         style={{ marginBottom: '10px', padding: '5px', width: '100%' }}
       />
       <ul className="ChannelList" style={{ listStyleType: 'none', padding: 0 }}>
-        {filteredChannels.map(channel => (
+        {filteredChanneles.map(channel => (
           <li key={channel.id} onClick={() => onChannelClick(channel.url)} style={{ cursor: 'pointer', marginBottom: '10px' }}>
             <h3>{channel.name}</h3>
             <p>{channel.description}</p>
