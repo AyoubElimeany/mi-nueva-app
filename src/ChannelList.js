@@ -19,9 +19,10 @@ const channels = [
 
 const ChannelList = ({ onChannelClick }) => {
   const [search, setSearch] = useState('');
-  const filteredChannels = channels.filter(channel =>
+  const filteredChanneles = channels.filter(channel =>
     channel.name.toLowerCase().includes(search.toLowerCase())
   );
+  
 
   return (
     <div>
