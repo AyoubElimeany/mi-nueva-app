@@ -1,34 +1,34 @@
-import React, { useState, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
+import React, { useEffect, useState } from 'react';
 
-// Lazy load components
-const ChannelList = lazy(() => import('./ChannelList'));
-const VideoPlayer = lazy(() => import('./VideoPlayer'));
+const App = () => {
+  const [data, setData] = useState(null);
 
-function App() {
-  const [selectedChannel, setSelectedChannel] = useState(null);
-
-  const handleChannelClick = (channelUrl) => {
-    setSelectedChannel(channelUrl);
-  };
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        console.log('API URL:', apiUrl); // Verifica la URL
+        const response = await fetch(`${apiUrl}/data`);
+        console.log('Response Status:', response.status); // Verifica el estado de la respuesta
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const result = await response.json();
+        setData(result);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
   return (
-    <Router>
-      <div className="App">
-        <header className="App-header">
-          <h1>¡Obtén acceso ilimitado a tus canales favoritos a través de nuestra app ahora!</h1>
-          <Suspense fallback={<div>Loading...</div>}>
-            <Routes>
-              <Route path="/" element={<ChannelList onChannelClick={handleChannelClick} />} />
-              <Route path="/video" element={selectedChannel ? <VideoPlayer url={selectedChannel} /> : <div>No video selected</div>} />
-            </Routes>
-          </Suspense>
-        </header>
-      </div>
-    </Router>
+    <div>
+      <h1>Data from API:</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
   );
-}
+};
 
 export default App;
-
