@@ -1,19 +1,25 @@
  // src/App.js
-import React from 'react';
+import React, { useState } from 'react';
+import './App.css';
 import ChannelList from './ChannelList';
+import VideoPlayer from './VideoPlayer';
 
-const App = () => {
-  const handleChannelClick = (url) => {
-    // Redirigir a la URL del canal
-    window.open(url, '_blank'); // Abre la URL en una nueva pestaña
+function App() {
+  const [selectedChannel, setSelectedChannel] = useState(null);
+
+  const handleChannelClick = (channelUrl) => {
+    setSelectedChannel(channelUrl);
   };
 
   return (
-    <div>
-      <h1>Mi Proyecto IPTV</h1>
-      <ChannelList onChannelClick={handleChannelClick} />
+    <div className="App">
+      <header className="App-header">
+        <h1>¡Obtén acceso ilimitado a tus canales favoritos a través de nuestra app ahora!</h1>
+        <ChannelList onChannelClick={handleChannelClick} />
+        {selectedChannel && <VideoPlayer url={selectedChannel} />}
+      </header>
     </div>
   );
-};
+}
 
 export default App;
